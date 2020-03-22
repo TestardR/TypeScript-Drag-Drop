@@ -1,9 +1,25 @@
 class ProjectInput {
-    templateElement: HTMLTemplateElement;
-    hostElement : HTMLDivElement;
+  templateElement: HTMLTemplateElement;
+  hostElement: HTMLDivElement;
+  formElement: HTMLFormElement;
 
-    constructor() {
-        this.templateElement = <HTMLTemplateElement>document.getElementById('project-input')!;
-        this.hostElement = <HTMLDivElement>document.getElementById('app')!;
-    }
+  constructor() {
+    this.templateElement = <HTMLTemplateElement>(
+      document.getElementById('project-input')!
+    );
+    this.hostElement = <HTMLDivElement>document.getElementById('app')!;
+
+    const importedNode = document.importNode(
+      this.templateElement.content,
+      true
+    );
+    console.log(importedNode);
+    this.formElement = <HTMLFormElement>importedNode.firstElementChild;
+    this.attach();
+  }
+  private attach() {
+    this.hostElement.insertAdjacentElement('afterbegin', this.formElement);
+  }
 }
+
+const prjInput = new ProjectInput();
